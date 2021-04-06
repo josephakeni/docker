@@ -45,7 +45,7 @@
 class docker {
 
 	yumrepo { 'docker-ce-stable':
-		ensure => 'absent',
+		ensure => 'present',
 		baseurl => 'https://download.docker.com/linux/centos/7/$basearch/stable',
 		descr => 'Docker CE Stable - $basearch',
 		enabled => '1',
@@ -53,17 +53,17 @@ class docker {
 		gpgkey => 'https://download.docker.com/linux/centos/gpg',
 	}
 	package { ['yum-utils', 'device-mapper-persistent-data','lvm2','deltarpm','docker-ce']:
-		ensure => 'absent', 
+		ensure => 'present', 
 	}
 	
 	service {'docker':
-		ensure => 'stopped',
-		enable => 'false',
+		ensure => 'running',
+		enable => 'true',
 	}
 
 	exec { 'docker run hello-world':
 		path => [ '/usr/bin', '/usr/sbin',],
-		logoutput => 'false',
+		logoutput => 'true',
 	}
 	
 }
